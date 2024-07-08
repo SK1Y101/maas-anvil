@@ -15,9 +15,11 @@
 
 import logging
 import sys
+import textwrap
 
 import click
 from sunbeam.plugins.interface.v1.base import PluginError
+import yaml
 
 LOG = logging.getLogger(__name__)
 LOCAL_ACCESS = "local"
@@ -43,3 +45,8 @@ class CatchGroup(click.Group):
             LOG.warn(message)
             LOG.error("Error: %s", e)
             sys.exit(1)
+
+
+def standard_indent(text: str) -> str:
+    as_yaml = yaml.safe_load(textwrap.dedent(text))
+    return yaml.safe_dump(as_yaml)
